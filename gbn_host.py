@@ -115,7 +115,7 @@ class GBNHost():
                         self.simulator.start_timer(self.entity, self.timer_interval)
 
                     while ( len(self.app_layer_buffer) > 0 and self.next_seq_num < (self.window_base + self.window_size) ) :
-                        payload = self.app_layer_buffer.pop()
+                        payload = self.app_layer_buffer.pop(0)
                         self.unacked_buffer[self.next_seq_num % self.window_size] = self.create_data_pkt(self.next_seq_num, payload)
                         self.simulator.pass_to_network_layer(self.entity, self.unacked_buffer[self.next_seq_num % self.window_size])
 
@@ -136,10 +136,36 @@ class GBNHost():
             else:
                 return
 
-        except struct.error:
+        except struct.error as err:
             #if len(packet) != 8:
-            self.simulator.pass_to_network_layer(self.entity, self.last_ack_pkt)
-            return
+            #self.simulator.pass_to_network_layer(self.entity, self.last_ack_pkt)
+            return err
+
+        # pkt_data = self.unpack_pkt(packet)
+
+        # pkt_type = pkt_data['packet_type']
+        # seq_num = pkt_data['seq_num']
+        # chksum = pkt_data['checksum']
+        
+        # if (self.is_corrupt(packet) == False) and (pkt_type == 0x1):
+        #     if seq_num >= self.window_base:
+        #         self.window_base = seq_num + 1
+        #         self.simulator.stop_timer(self.entity)
+
+        #         if self.window_base != self.next_seq_num:
+        #             self.simulator.start_timer(self.entity, self.timer_interval)
+
+        #         while len(self.app_layer_buffer) > 0 and self.next_seq_num < (self.window_base + self.window_size):
+        #             payload = self.app_layer_buffer.pop()
+        #             self.unacked_buffer[self.next_seq_num % self.window_size] = create_
+        # else:
+        #     return
+        
+    
+        
+
+
+
     
 
     def timer_interrupt(self):
@@ -313,6 +339,6 @@ class GBNHost():
         Returns:
             bool: whether or not the packet data has been corrupted
         """
-        
+
         checksum = self.create_checksum(packet)
         return checksum != 0x0000
