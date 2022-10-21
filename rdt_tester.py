@@ -44,8 +44,8 @@ class RDTTester():
 
     def run_tests(self, tests):
         __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-        if not os.path.exists(os.path.join(__location__, 'Logs')):
-            os.makedirs(os.path.join(__location__, 'Logs'))   
+        if not os.path.exists(os.path.join(__location__, 'logs')):
+            os.makedirs(os.path.join(__location__, 'logs'))   
 
         results = []
         for test in tests:
@@ -290,18 +290,18 @@ class RDTTester():
 if __name__ == "__main__":
     
     tests = {
-        #"Test1_SlowDataRate_0Loss_0Corruption": 13,
-        #"Test2_SlowDataRate_25Loss_0Corruption": 6.5,
+        "Test1_SlowDataRate_0Loss_0Corruption": 13,
+        "Test2_SlowDataRate_25Loss_0Corruption": 6.5,
         "Test3_SlowDataRate_0Loss_25Corruption": 6.5,
-        #"Test4_SlowDataRate_25Loss_25Corruption": 6.5,
-        #"Test5_MediumDataRate_0Loss_0Corruption": 4.0625,
-        #"Test6_MediumDataRate_10Loss_0Corruption": 4.0625,
-        #"Test7_MediumDataRate_0Loss_10Corruption": 4.0625,
-        #"Test8_MediumDataRate_10Loss_10Corruption": 4.0625,
-        #Infinite "Test9_FastDataRate_0Loss_0Corruption": 4.0625,
-        #Infinite "Test10_FastDataRate_10Loss_0Corruption": 4.0625,
-        #Infinite  "Test11_FastDataRate_0Loss_10Corruption": 4.0625,
-        #Infinite "Test12_FastDataRate_10Loss_10Corruption": 4.0625,
+        "Test4_SlowDataRate_25Loss_25Corruption": 6.5,
+        "Test5_MediumDataRate_0Loss_0Corruption": 4.0625,
+        "Test6_MediumDataRate_10Loss_0Corruption": 4.0625,
+        "Test7_MediumDataRate_0Loss_10Corruption": 4.0625,
+        "Test8_MediumDataRate_10Loss_10Corruption": 4.0625,
+        "Test9_FastDataRate_0Loss_0Corruption": 4.0625,
+        "Test10_FastDataRate_10Loss_0Corruption": 4.0625,
+        "Test11_FastDataRate_0Loss_10Corruption": 4.0625,
+        "Test12_FastDataRate_10Loss_10Corruption": 4.0625,
     }
 
     test_manager = RDTTester(GBNHost)

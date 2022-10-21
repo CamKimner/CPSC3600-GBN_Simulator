@@ -114,7 +114,7 @@ class GBNHost():
                     if (self.window_base != self.next_seq_num):
                         self.simulator.start_timer(self.entity, self.timer_interval)
 
-                    while (len(self.app_layer_buffer) > 0) and (self.next_seq_num < self.window_base + self.window_base) :
+                    while ( len(self.app_layer_buffer) > 0 and self.next_seq_num < (self.window_base + self.window_size) ) :
                         payload = self.app_layer_buffer.pop()
                         self.unacked_buffer[self.next_seq_num % self.window_size] = self.create_data_pkt(self.next_seq_num, payload)
                         self.simulator.pass_to_network_layer(self.entity, self.unacked_buffer[self.next_seq_num % self.window_size])
@@ -123,7 +123,6 @@ class GBNHost():
                             self.simulator.start_timer(self.entity, self.timer_interval)
 
                         self.next_seq_num += 1
-                # What about handling ack_num >= window_size
 
             # If Data packet
             if packet_data['packet_type'] == 0x0 :
