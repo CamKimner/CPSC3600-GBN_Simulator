@@ -98,8 +98,8 @@ class GBNHost():
             nothing        
         """
         if self.is_corrupt(packet):
-            if len(packet) != 8:
-                self.simulator.pass_to_network_layer(self.entity, self.last_ack_pkt)
+            #if len(packet) != 8:
+            self.simulator.pass_to_network_layer(self.entity, self.last_ack_pkt)
             return
 
         try:
@@ -137,8 +137,8 @@ class GBNHost():
                 return
 
         except struct.error:
-            if len(packet) != 8:
-                self.simulator.pass_to_network_layer(self.entity, self.last_ack_pkt)
+            #if len(packet) != 8:
+            self.simulator.pass_to_network_layer(self.entity, self.last_ack_pkt)
             return
     
 
