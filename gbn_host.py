@@ -266,20 +266,42 @@ class GBNHost():
         Returns:
             int: the checksum value
         """
+        # if len(packet) % 2 == 1 :
+        #     packet += bytes(1)
+
+        # words = []
+        # for i in range(0, len(packet), 2) :
+        #     word = packet[i] << 8 | packet[i+1]
+        #     words.append(word)
+
+        # sum_words = sum(words)
+
+        # result = (sum_words & 0xffff) + (sum_words >> 16)
+        # checksum = ~result & 0xffff
+
+        # return checksum
+
         if len(packet) % 2 == 1 :
             packet += bytes(1)
 
-        words = []
-        for i in range(0, len(packet), 2) :
-            word = packet[i] << 8 | packet[i+1]
-            words.append(word)
+        s = 0x0000
+        #print("Creating checksum")
+        for i in range(0, len(packet), 2):
+            w = packet[i] << 8 | packet[i+1]
+            #print("+ " + str(w))
+            #print("--------")
+            s = self.carry_around_add(s,w)
+            #print("  " + str(s))
 
-        sum_words = sum(words)
-
-        result = (sum_words & 0xffff) + (sum_words >> 16)
-        checksum = ~result & 0xffff
-
+        checksum = ~s & 0xffff
+        #print("--------")
+        #print("= " + str(checksum))
         return checksum
+
+
+    def carry_around_add(self, a, b):
+        c = a + b
+        return (c&0xffff) + (c >> 16)
 
     def unpack_pkt(self, packet):
         """ Create a dictionary containing the contents of a given packet
